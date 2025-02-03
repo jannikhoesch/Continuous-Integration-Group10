@@ -14,8 +14,7 @@ FILL IN LATER
 ## Installation & Setup
 1. Clone the repository:
    ```sh
-   git clone https://github.com/Heroldpls/Continuous-Integration-Group10.git
-   cd DECIDE
+   git clone https://github.com/jannikhoesch/Continuous-Integration-Group10.git
    ```
 2. FILL IN LATER
    ```
