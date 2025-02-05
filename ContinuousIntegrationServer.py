@@ -1,8 +1,59 @@
 from fastapi import FastAPI, Request
 import subprocess
 import uvicorn
+import sqlite3
+import uuid
+from datetime import datetime
 
 app = FastAPI()
+DB_FILE = "builds.db"
+
+def init_db():
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS builds (
+            id TEXT PRIMARY KEY,
+            commit_id TEXT,
+            timestamp TEXT,
+            log TEXT
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+init_db()
+
+
+# Endpoint to build history
+@app.get("/builds")
+def list_builds():
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+    c.execute("SELECT id, commit_id, timestamp FROM builds ORDER BY timestamp DESC")
+    builds = c.fetchall()
+    conn.close()
+
+    return [{"id": b[0], "commit_id": b[1], "timestamp": b[2]} for b in builds]
+
+
+# Endpoint to specific build
+@app.get("/builds/{id}")
+def get_build(id: str):
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+    c.execute("SELECT * FROM builds WHERE id = ?", (id,))
+    build = c.fetchone()
+    conn.close()
+
+    if build:
+        return {
+            "id": build[0],
+            "commit_id": build[1],
+            "timestamp": build[2],
+            "log": build[3]
+        }
+    return {"error": "Build not found"}
 
 
 @app.post("/webhook")
