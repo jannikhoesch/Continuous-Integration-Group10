@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 import subprocess
 import uvicorn
+from CommitStatus import send_commit_status
 
 app = FastAPI()
 
@@ -17,6 +18,7 @@ async def handle(request: Request):
     # for example
     # 1st clone your repository
     # 2nd compile the code
+    # 3rd send commit status to github
 
     return {"message": "CI job done"}
 
