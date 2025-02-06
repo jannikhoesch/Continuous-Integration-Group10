@@ -1,10 +1,13 @@
 import requests
 
 def send_commit_status(commit_sha: str, state: str, description: str, target_url: str,
-                       github_token: str, github_api_url):
+                       github_api_url):
     """
     Send commit status to GitHub using the Commit Status API.
     """
+    with open('GithubToken.txt', 'r') as file:
+        file.readline()
+        github_token = file.readline() # found on the second line
     headers = {
         "Authorization": f"token {github_token}",
         "Accept": "application/vnd.github.v3+json",
