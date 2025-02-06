@@ -19,11 +19,19 @@ class Database:
         conn.commit()
         conn.close()
 
-    def execute(self, query, params=()):
-        conn = sqlite3.connect(self.db_file)
-        c = conn.cursor()
-        c.execute(query, params)
-        result = c.fetchall()
-        conn.commit()
-        conn.close()
-        return result
+def fetch(self, query, params=()):
+    """Fetch results without modifying the database."""
+    conn = sqlite3.connect(self.db_file)
+    c = conn.cursor()
+    c.execute(query, params)
+    result = c.fetchall()
+    conn.close()
+    return result
+
+def execute(self, query, params=()):
+    """Execute a query that modifies the database."""
+    conn = sqlite3.connect(self.db_file)
+    c = conn.cursor()
+    c.execute(query, params)
+    conn.commit()
+    conn.close()
