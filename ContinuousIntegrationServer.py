@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
 import subprocess
 import uvicorn
 import uuid
@@ -6,28 +7,30 @@ from datetime import datetime
 from Database import Database
 
 app = FastAPI()
+templates = Jinja2Templates(directory="templates")
 DB_FILE = "builds.db"
 db = Database(DB_FILE)
 
 
 # Endpoint to build history
 @app.get("/builds")
-def list_builds():
-    builds = db.execute("SELECT id FROM builds ORDER BY timestamp DESC")
-    return [f"http://0.0.0.0:8010/builds/{b[0]}" for b in builds]
-
+def list_builds(request: Request):
+    builds = db.execute("SELECT id, timestamp FROM builds ORDER BY timestamp DESC")
+    b = [{"id": b[0], "timestamp": datetime.fromisoformat(b[1]).strftime("%Y-%m-%d %H:%M:%S")} for b in builds]
+    return templates.TemplateResponse("build_history.html", {"request": request, "builds": b})
 
 # Endpoint to specific build
 @app.get("/builds/{id}")
-def get_build(id: str):
+def get_build(request: Request, id: str):
     build = db.execute("SELECT * FROM builds WHERE id = ?", (id,))
     if build:
-        return {
+        build_details = {
             "id": build[0][0],
             "commit_id": build[0][1],
-            "timestamp": build[0][2],
+            "timestamp": datetime.fromisoformat(build[0][2]).strftime("%Y-%m-%d %H:%M:%S"),
             "log": build[0][3]
         }
+        return templates.TemplateResponse("build.html", {"request": request, "build": build_details})
     return {"error": "Build not found"}
 
 
@@ -35,24 +38,6 @@ def get_build(id: str):
 async def handle(request: Request):
     data = await request.json()
     print(data)
-
-    # Extract repository URL and branch info
-    repo_url = data.get("repository", {}).get("clone_url")
-    branch = data.get("ref").split("/")[-1]
-
-    commit_id = data.get("after")
-    timestamp = datetime.now().isoformat()
-    build_id = str(uuid.uuid4())
-
-    print("Webhook received for repo:", repo_url, ", branch:", branch)
-
-
-    # Insert build details into the database
-    db.execute("""
-            INSERT INTO builds (id, commit_id, timestamp, log)
-            VALUES (?, ?, ?, ?)
-        """, (build_id, commit_id, timestamp, "Build started"))
-
 
     # here you do all the continuous integration tasks
     # for example
