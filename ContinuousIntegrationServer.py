@@ -60,9 +60,27 @@ def get_build(id: str):
 async def handle(request: Request):
     data = await request.json()
 
+    print(data)
+
     # Extract repository URL and branch info
     repo_url = data.get("repository", {}).get("clone_url")
     branch = data.get("ref").split("/")[-1]
+
+    commit_id = data.get("after")
+    timestamp = datetime.now().isoformat()
+    build_id = str(uuid.uuid4())
+
+    # Insert build details into the database
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+    c.execute("""
+            INSERT INTO builds (id, commit_id, timestamp, log)
+            VALUES (?, ?, ?, ?)
+        """, (build_id, commit_id, timestamp, "Build started"))
+    conn.commit()
+    conn.close()
+
+    #print("Webhook received for repo:", repo_url, ", branch:", branch)
 
     # here you do all the continuous integration tasks
     # for example
