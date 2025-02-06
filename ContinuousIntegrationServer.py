@@ -19,13 +19,6 @@ async def handle(request: Request):
     # 1st clone your repository
     # 2nd compile the code
     # 3rd send commit status to github
-    """
-    commit_SHA = data.get("head_commit", {}).get("id")
-    status = "success" or "failure # I think I get this from the previous process
-    description = "Write something nice here"
-    target_url = "http://127.0.0.1:8000 "
-    send_commit_status(commit_SHA, status, description, target_url)
-    """
     return {"message": "CI job done"}
 
 

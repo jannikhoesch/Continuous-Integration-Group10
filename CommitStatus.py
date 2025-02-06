@@ -28,8 +28,11 @@ def send_commit_status(commit_sha: str, state: str, description: str, target_url
     else:
         print(f"Failed to post commit status: {response.status_code}, {response.text}")
 
+"""
+# example use:
 commit_SHA = "a284bfc59fd6f157f65b71d027fcf09d8194066c"
 status = "success" # I think I get this from the previous process
 description = "TESTING THE THING"
 target_url = "http://127.0.0.1:8000 "
 send_commit_status(commit_SHA, status, description, target_url)
+"""
