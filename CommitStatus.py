@@ -1,14 +1,16 @@
 import requests
+import os
+from dotenv import load_dotenv
 
 def send_commit_status(commit_sha: str, state: str, description: str, target_url: str):
     """
     Send commit status to GitHub using the Commit Status API.
     """
 
-    github_api_url = "https://api.github.com/repos/jannikhoesch/Continuous-Integration-Group10/statuses"
-    with open('GithubToken.txt', 'r') as file:
-        file.readline()
-        github_token = file.readline() # found on the second line
+    load_dotenv()
+    github_token = os.getenv("GITHUB_TOKEN")
+    github_api_url = os.getenv("GITHUB_API_URL")
+
     headers = {
         "Authorization": f"token {github_token}",
         "Accept": "application/vnd.github.v3+json",
