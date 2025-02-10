@@ -5,6 +5,7 @@ import uvicorn
 import uuid
 from datetime import datetime
 from Database import Database
+from CommitStatus import send_commit_status
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -43,7 +44,7 @@ async def handle(request: Request):
     # for example
     # 1st clone your repository
     # 2nd compile the code
-
+    # 3rd send commit status to github
     return {"message": "CI job done"}
 
 
