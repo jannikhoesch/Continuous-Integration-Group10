@@ -6,32 +6,28 @@ class Database:
         self.init_db()
 
     def init_db(self):
-        conn = sqlite3.connect(self.db_file)
-        c = conn.cursor()
-        c.execute("""
-            CREATE TABLE IF NOT EXISTS builds (
-                id TEXT PRIMARY KEY,
-                commit_id TEXT,
-                timestamp TEXT,
-                log TEXT
-            )
-        """)
-        conn.commit()
-        conn.close()
+        with sqlite3.connect(self.db_file) as conn:
+            c = conn.cursor()
+            c.execute("""
+                CREATE TABLE IF NOT EXISTS builds (
+                    id TEXT PRIMARY KEY,
+                    commit_id TEXT,
+                    timestamp TEXT,
+                    log TEXT
+                )
+            """)
+            conn.commit()
 
-def fetch(self, query, params=()):
-    """Fetch results without modifying the database."""
-    conn = sqlite3.connect(self.db_file)
-    c = conn.cursor()
-    c.execute(query, params)
-    result = c.fetchall()
-    conn.close()
-    return result
+    def fetch(self, query, params=()):
+        """Fetch results without modifying the database."""
+        with sqlite3.connect(self.db_file) as conn:
+            c = conn.cursor()
+            c.execute(query, params)
+            return c.fetchall()
 
-def execute(self, query, params=()):
-    """Execute a query that modifies the database."""
-    conn = sqlite3.connect(self.db_file)
-    c = conn.cursor()
-    c.execute(query, params)
-    conn.commit()
-    conn.close()
+    def execute(self, query, params=()):
+        """Execute a query that modifies the database."""
+        with sqlite3.connect(self.db_file) as conn:
+            c = conn.cursor()
+            c.execute(query, params)
+            conn.commit()
