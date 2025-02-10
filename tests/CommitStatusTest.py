@@ -1,6 +1,5 @@
 import unittest
 import os
-from Database import Database
 from CommitStatus import send_commit_status
 
 class TestCommitStatus(unittest.TestCase):
