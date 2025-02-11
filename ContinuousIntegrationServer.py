@@ -2,7 +2,6 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 import subprocess
 import uvicorn
-import uuid
 from datetime import datetime
 from Database import Database
 from CommitStatus import send_commit_status
@@ -47,12 +46,12 @@ async def handle(request: Request):
 
     with tempfile.TemporaryDirectory() as temp_dir:
         clone_repo(repo_url, branch, commit_sha, temp_dir)
+        
+        #add compilation here
 
-    # here you do all the continuous integration tasks
-    # for example
-    # 1st clone your repository
-    # 2nd compile the code
-    # 3rd send commit status to github
+        test_success, test_output = run_tests(temp_dir, commit_sha)
+        test_status = "success" if test_success else "failure"
+
     return {"message": "CI job done"}
 
 def clone_repo(repo_url, branch, commit_sha, dir):
@@ -60,6 +59,11 @@ def clone_repo(repo_url, branch, commit_sha, dir):
     checkout_cmd = f"cd {dir} && git checkout {branch} && git reset --hard {commit_sha}"
     subprocess.run(clone_cmd, shell=True, check=True, capture_output=True, text=True)
     subprocess.run(checkout_cmd, shell=True, check=True, capture_output=True, text=True)
+
+def run_tests(temp_dir, commit_sha):
+    test_cmd = f"cd {temp_dir} && python -m unittest discover tests"
+    result = subprocess.run(test_cmd, shell=True, capture_output=True, text=True)
+    return (result.returncode == 0, f"Commit {commit_sha}\n" + result.stdout + result.stderr)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8010)
