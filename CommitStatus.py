@@ -27,8 +27,10 @@ def send_commit_status(commit_sha: str, state: str, description: str, target_url
 
     if response.status_code == 201:
         print(f"Successfully posted commit status: {state}")
+        return True
     else:
         print(f"Failed to post commit status: {response.status_code}, {response.text}")
+        return False
 
 """
 # example use:
