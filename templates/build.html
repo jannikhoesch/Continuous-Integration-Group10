@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Build Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .build-details {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .build-details p {
+            margin: 10px 0;
+        }
+        .build-details pre {
+            background: #eaeaea;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Build {{ build.id }}</h1>
+    <div class="build-details">
+        <p><strong>Commit ID:</strong> {{ build.commit_id | e  }}</p>
+        <p><strong>Timestamp:</strong> {{ build.timestamp | e  }}</p>
+        <p><strong>Log:</strong></p>
+        <pre>{{ build.log | e  }}</pre>
+    </div>
+</body>
+</html>
