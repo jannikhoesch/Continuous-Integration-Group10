@@ -16,14 +16,14 @@ db = Database(DB_FILE)
 # Endpoint to build history
 @app.get("/builds")
 def list_builds(request: Request):
-    builds = db.execute("SELECT id, timestamp FROM builds ORDER BY timestamp DESC")
+    builds = db.fetch("SELECT id, timestamp FROM builds ORDER BY timestamp DESC")
     b = [{"id": b[0], "timestamp": datetime.fromisoformat(b[1]).strftime("%Y-%m-%d %H:%M:%S")} for b in builds]
     return templates.TemplateResponse("build_history.html", {"request": request, "builds": b})
 
 # Endpoint to specific build
 @app.get("/builds/{id}")
 def get_build(request: Request, id: str):
-    build = db.execute("SELECT * FROM builds WHERE id = ?", (id,))
+    build = db.fetch("SELECT * FROM builds WHERE id = ?", (id,))
     if build:
         build_details = {
             "id": build[0][0],
