@@ -18,14 +18,11 @@ async def handle(request: Request):
 
     with tempfile.TemporaryDirectory() as temp_dir:
         clone_repo(repo_url, branch, commit_sha, temp_dir)
-        environment = get_environment(temp_dir)
         
         #add compilation here
 
-        test_success, test_output = run_tests(environment, temp_dir, commit_sha)
+        test_success, test_output = run_tests(temp_dir, commit_sha)
         test_status = "success" if test_success else "failure"
-        print(test_status)
-        print(test_output)
 
     return {"message": "CI job done"}
 
@@ -35,20 +32,8 @@ def clone_repo(repo_url, branch, commit_sha, dir):
     subprocess.run(clone_cmd, shell=True, check=True, capture_output=True, text=True)
     subprocess.run(checkout_cmd, shell=True, check=True, capture_output=True, text=True)
 
-def get_environment(temp_dir):
-    # Detect build system and compile
-    if os.path.exists(f"{temp_dir}/Makefile"):
-        return "Make"
-    elif os.path.exists(f"{temp_dir}/setup.py"):
-        return "Python"
-    elif os.path.exists(f"{temp_dir}/pom.xml"):
-        return "Maven"
-    else:
-        return False, "No recognized build system found (Makefile, setup.py, pom.xml)."
-
-def run_tests(environment, temp_dir, commit_sha):
-    if environment == "Python":
-        test_cmd = f"cd {temp_dir} && python -m unittest discover tests"
+def run_tests(temp_dir, commit_sha):
+    test_cmd = f"cd {temp_dir} && python -m unittest discover tests"
     result = subprocess.run(test_cmd, shell=True, capture_output=True, text=True)
     return (result.returncode == 0, f"Commit {commit_sha}\n" + result.stdout + result.stderr)
 
