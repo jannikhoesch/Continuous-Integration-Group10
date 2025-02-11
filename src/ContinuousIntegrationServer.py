@@ -3,8 +3,8 @@ from fastapi.templating import Jinja2Templates
 import subprocess
 import uvicorn
 from datetime import datetime
-from Database import Database
-from CommitStatus import send_commit_status
+from .Database import Database
+from .CommitStatus import send_commit_status
 import tempfile
 
 app = FastAPI()
