@@ -17,9 +17,9 @@ CONTINUOUS-INTEGRATION-GROUP10//
 │   ├── ContinuousIntegrationServer.py
 │   ├── Database.py
 │   ├── __init__.py
-├── templates/
-│   ├── build.html
-│   ├── build_history.html
+│   ├──templates/
+│   │   ├── build.html
+│   │   ├── build_history.html
 ├── tests/
 │   ├── mock_test/
 │   │   ├── tests/
