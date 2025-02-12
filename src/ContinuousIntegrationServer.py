@@ -6,8 +6,8 @@ import uvicorn
 import logging
 import uuid
 from datetime import datetime
-from Database import Database
-from CommitStatus import send_commit_status
+from src.Database import Database
+from src.CommitStatus import send_commit_status
 import tempfile
 
 app = FastAPI()
