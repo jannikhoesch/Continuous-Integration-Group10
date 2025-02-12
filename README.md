@@ -99,6 +99,8 @@ We continued with a similar workflow from how we completed assignment 1. This ti
 ### **Jannik**
 
 - **Tasks:**
+  - Setup Webhook
+  - Implement build history
 
 ---
 
