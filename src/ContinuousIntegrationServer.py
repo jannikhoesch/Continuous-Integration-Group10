@@ -6,9 +6,12 @@ import uvicorn
 import logging
 import uuid
 from datetime import datetime
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.Database import Database
 from src.CommitStatus import send_commit_status
 import tempfile
+
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
