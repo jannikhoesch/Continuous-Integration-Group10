@@ -56,7 +56,7 @@ CONTINUOUS-INTEGRATION-GROUP10//
 
 ## Running the server
    ```sh
-   cd CONTINUOUS-INTEGRATION-GROUP10/src
+   cd src
    python ContinuousIntegrationServer.py
    ```
 
@@ -80,6 +80,9 @@ Title: `issue/{issueNr}`
 Description: `{description of change} #{issueNr}`
 
 ---
+## Way of Working  
+
+We continued with a similar workflow from how we completed assignment 1. This time we were a bit more used to using git. Using the **Essence Standard Checklist**, we currently consider ourselves to be in the **“In Place”** state since using the tools is working properly, but we are still not entirely used to working with Git in this way yet, which causes some problems to arise from time to time. We believe, however, that more practice will optimize our way of working and that we are on a good path to reaching an efficient workflow.  
 
 ## Task Distribution
 
