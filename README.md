@@ -60,6 +60,22 @@ CONTINUOUS-INTEGRATION-GROUP10//
    python ContinuousIntegrationServer.py
    ```
 
+### Test Execution
+
+The tests are executed by the `run_tests` function within `ContinuousIntegrationServer.py` using the following command:
+
+```sh
+python -m unittest discover tests
+```
+
+This command runs all unit test modules found in the `tests` directory.
+
+### Unit Test for Test Execution
+
+The unit test for test execution is located in `testRunTests.py`. It calls `run_tests` with a test in a mock directory. If the mock test executes as expected, `testRunTests.py` should return `True`, indicating that the unit test has passed.
+
+
+
 ## Contributing
 
 1. Fork the repository
