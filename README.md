@@ -62,6 +62,8 @@ Description: `{description of change} #{issueNr}`
 ### **Jannik**
 
 - **Tasks:**
+  - Setup Webhook
+  - Implement build history
 
 ---
 
