@@ -1,7 +1,7 @@
 
 # Continuous-Integration-Group10
 
-# DECIDE Project - DD2480 Assignment 2
+# Continuous Integration Project - DD2480 Assignment 2
 
 ## Overview
 
