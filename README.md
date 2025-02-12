@@ -107,6 +107,8 @@ We continued with a similar workflow from how we completed assignment 1. This ti
 ### **Amanda**
 
 - **Tasks:**
+   - P2 (test execution)
+   - Folder structure
 
 ---
 
