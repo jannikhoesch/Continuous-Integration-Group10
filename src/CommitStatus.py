@@ -4,9 +4,18 @@ from dotenv import load_dotenv
 
 def send_commit_status(commit_sha: str, state: str, description: str, target_url: str):
     """
-    Send commit status to GitHub using the Commit Status API.
-    """
+    Sends the status of a commit to GitHub.
 
+    Args:
+        commit_sha (str): The SHA of the commit.
+        state (str): The state of the commit status. Can be one of 'error', 'failure', 'pending', or 'success'.
+        description (str): A short description of the status.
+        target_url (str): The URL where details about the build can be found.
+
+    Returns:
+        bool: True if the status was successfully posted, False otherwise.
+    """
+    
     load_dotenv()
     github_token = os.getenv("GITHUB_TOKEN")
     github_api_url = os.getenv("GITHUB_API_URL")
