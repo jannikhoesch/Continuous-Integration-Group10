@@ -32,7 +32,7 @@ class TestCloneRepo(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as temp_dir:
             clone_repo(repo_url, branch, commit_sha, temp_dir)
-            self.assertFalse(os.path.isfile(f"{temp_dir}/README.md"))
+            self.assertTrue(os.path.isfile(f"{temp_dir}/README.md"))
 
 if __name__ == '__main__':
     unittest.main()
