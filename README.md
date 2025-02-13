@@ -129,3 +129,5 @@ We continued with a similar workflow from how we completed assignment 1. This ti
 ### **Zyad**
 
 - **Tasks:**
+  - Compile Project 
+  - Project documentation
