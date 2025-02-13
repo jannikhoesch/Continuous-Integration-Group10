@@ -40,6 +40,7 @@ logging.basicConfig(level=logging.INFO)
 
 # Endpoint to build history
 @app.get("/builds")
+def list_builds(request: Request):
     """
     Handles the request to list all builds in the system.
     Args:
